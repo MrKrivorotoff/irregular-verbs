@@ -11,6 +11,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.apache.commons.csv.CSVFormat
 
+private const val RANDOM_ATTEMPTS_NUMBER = 99
+
 class MainActivity : AppCompatActivity() {
     private lateinit var mInfinitiveText: TextView
     private lateinit var mPastSimpleText: TextView
@@ -58,7 +60,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun onActionButtonClick() {
         if (isActionRoll()) {
-            mCurrentVerb = mIrregularVerbs.random()
+            val irregularVerbs = mIrregularVerbs
+            val currentVerb = mCurrentVerb
+            (1..RANDOM_ATTEMPTS_NUMBER).forEach {
+                val irregularVerb = irregularVerbs.random()
+                if (irregularVerb.infinitive != currentVerb?.infinitive)
+                    mCurrentVerb = irregularVerb
+            }
             mHasPastRevealed = false
         } else {
             mHasPastRevealed = true
