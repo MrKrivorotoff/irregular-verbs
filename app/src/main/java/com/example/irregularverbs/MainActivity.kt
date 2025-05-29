@@ -64,8 +64,10 @@ class MainActivity : AppCompatActivity() {
             val currentVerb = mCurrentVerb
             (1..RANDOM_ATTEMPTS_NUMBER).forEach {
                 val irregularVerb = irregularVerbs.random()
-                if (irregularVerb.infinitive != currentVerb?.infinitive)
+                if (irregularVerb.infinitive != currentVerb?.infinitive) {
                     mCurrentVerb = irregularVerb
+                    return@forEach
+                }
             }
             mHasPastRevealed = false
         } else {
