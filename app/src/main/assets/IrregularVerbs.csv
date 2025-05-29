@@ -1,4 +1,4 @@
-Infinitive,PastSimple,PastParticiple
+infinitive,past simple,past participle
 be,was/were,been
 beat,beat,beaten
 become,became,become
@@ -64,7 +64,7 @@ mean,meant,meant
 meet,met,met
 pay,paid,paid
 put,put,put
-read,read,read
+read,read [red]*,read [red]*
 ride,rode,ridden
 ring,rang,rung
 rise,rose,risen
