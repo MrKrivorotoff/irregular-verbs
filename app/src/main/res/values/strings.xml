@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">IrregularVerbs</string>
+    <string name="infinitive">Infinitive</string>
+    <string name="past_simple">Past simple</string>
+    <string name="past_participle">Past participle</string>
+    <string name="roll_verb">Roll verb</string>
+    <string name="show_past">Show past</string>
+</resources>
