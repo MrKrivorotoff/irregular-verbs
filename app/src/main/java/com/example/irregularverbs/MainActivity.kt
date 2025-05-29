@@ -1,5 +1,6 @@
 package com.example.irregularverbs
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
@@ -17,7 +18,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mInfinitiveText: TextView
     private lateinit var mPastSimpleText: TextView
     private lateinit var mPastParticipleText: TextView
-    private lateinit var mActionButton: Button
+    private lateinit var mDoMainActionButton: Button
+    private lateinit var mOpenVerbsListButton: Button
 
     private lateinit var mIrregularVerbs: ArrayList<IrregularVerb>
 
@@ -37,9 +39,13 @@ class MainActivity : AppCompatActivity() {
         mPastSimpleText = findViewById(R.id.past_simple)
         mPastParticipleText = findViewById(R.id.past_participle)
 
-        val actionButton = findViewById<Button>(R.id.button_action)
-        actionButton.setOnClickListener { onActionButtonClick() }
-        mActionButton = actionButton
+        val doMainActionButton = findViewById<Button>(R.id.button_do_main_action)
+        doMainActionButton.setOnClickListener { onDoMainActionButtonClick() }
+        mDoMainActionButton = doMainActionButton
+
+        val openVerbsListButton = findViewById<Button>(R.id.button_open_verbs_list)
+        openVerbsListButton.setOnClickListener { onOpenVerbsListButtonClick() }
+        mOpenVerbsListButton = openVerbsListButton
 
         mIrregularVerbs = savedInstanceState?.getParcelableArrayList(
             "IrregularVerbsList",
@@ -58,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         .drop(1)
         .mapTo(ArrayList()) { IrregularVerb(it[0], it[1], it[2]) }
 
-    private fun onActionButtonClick() {
+    private fun onDoMainActionButtonClick() {
         if (isActionRoll()) {
             val irregularVerbs = mIrregularVerbs
             val currentVerb = mCurrentVerb
@@ -77,10 +83,15 @@ class MainActivity : AppCompatActivity() {
         updateButtonText()
     }
 
+    private fun onOpenVerbsListButtonClick() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
     private fun isActionRoll() = mCurrentVerb == null || mHasPastRevealed
 
     private fun updateButtonText() {
-        mActionButton.text = getText(
+        mDoMainActionButton.text = getText(
             if (isActionRoll())
                 R.string.roll_verb
             else
