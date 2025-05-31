@@ -2,15 +2,12 @@ package com.example.irregularverbs
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import org.apache.commons.csv.CSVFormat
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mInfinitiveText: TextView
@@ -56,12 +53,6 @@ class MainActivity : AppCompatActivity() {
         updateMainActionButtonText()
     }
 
-    private fun readIrregularVerbs(): ArrayList<IrregularVerb> = CSVFormat.DEFAULT
-        .parse(assets.open("IrregularVerbs.csv").reader())
-        .asSequence()
-        .drop(1)
-        .mapTo(ArrayList()) { IrregularVerb(it[0], it[1], it[2]) }
-
     private fun onDoMainActionButtonClick() {
         if (isActionRoll()) {
             val currentVerb = mCurrentVerb
@@ -81,7 +72,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onOpenVerbsListButtonClick() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, VerbsListActivity::class.java)
         startActivity(intent)
     }
 
@@ -113,35 +104,5 @@ class MainActivity : AppCompatActivity() {
         outState.putParcelable("CurrentVerb", mCurrentVerb)
         outState.putBoolean("HasPastRevealed", mHasPastRevealed)
         super.onSaveInstanceState(outState)
-    }
-}
-
-data class IrregularVerb(
-    val infinitive: String,
-    val pastSimple: String,
-    val pastParticiple: String,
-) : Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readString().orEmpty(),
-        parcel.readString().orEmpty(),
-        parcel.readString().orEmpty(),
-    )
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(infinitive)
-        parcel.writeString(pastSimple)
-        parcel.writeString(pastParticiple)
-    }
-
-    override fun describeContents(): Int = 0
-
-    companion object CREATOR : Parcelable.Creator<IrregularVerb> {
-        override fun createFromParcel(parcel: Parcel): IrregularVerb {
-            return IrregularVerb(parcel)
-        }
-
-        override fun newArray(size: Int): Array<IrregularVerb?> {
-            return arrayOfNulls(size)
-        }
     }
 }

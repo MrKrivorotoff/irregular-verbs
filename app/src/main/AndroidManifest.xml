@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IrregularVerbs">
         <activity
+            android:name=".VerbsListActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
