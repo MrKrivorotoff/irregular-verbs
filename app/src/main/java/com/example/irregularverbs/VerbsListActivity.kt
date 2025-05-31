@@ -1,12 +1,15 @@
 package com.example.irregularverbs
 
 import android.os.Bundle
+import android.widget.TableLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class VerbsListActivity : AppCompatActivity() {
+    private lateinit var mVerbsTable: TableLayout
+
     private lateinit var mIrregularVerbs: ArrayList<IrregularVerb>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,6 +21,7 @@ class VerbsListActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        mVerbsTable = findViewById(R.id.verbs_table)
 
         mIrregularVerbs = savedInstanceState?.getParcelableArrayList(
             "IrregularVerbsList",
