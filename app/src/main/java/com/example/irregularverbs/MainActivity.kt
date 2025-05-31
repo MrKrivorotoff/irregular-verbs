@@ -73,6 +73,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun onOpenVerbsListButtonClick() {
         val intent = Intent(this, VerbsListActivity::class.java)
+        intent.putParcelableArrayListExtra("IrregularVerbsList", mIrregularVerbs)
         startActivity(intent)
     }
 

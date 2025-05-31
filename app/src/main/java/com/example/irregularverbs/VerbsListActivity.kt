@@ -22,7 +22,10 @@ class VerbsListActivity : AppCompatActivity() {
         mIrregularVerbs = savedInstanceState?.getParcelableArrayList(
             "IrregularVerbsList",
             IrregularVerb::class.java
-        ) ?: readIrregularVerbs()
+        ) ?: intent.getParcelableArrayListExtra(
+            "IrregularVerbsList",
+            IrregularVerb::class.java
+        ) ?: throw IllegalArgumentException()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
