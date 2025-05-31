@@ -12,8 +12,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.apache.commons.csv.CSVFormat
 
-private const val RANDOM_ATTEMPTS_NUMBER = 99
-
 class MainActivity : AppCompatActivity() {
     private lateinit var mInfinitiveText: TextView
     private lateinit var mPastSimpleText: TextView
@@ -54,8 +52,8 @@ class MainActivity : AppCompatActivity() {
 
         mCurrentVerb = savedInstanceState?.getParcelable("CurrentVerb", IrregularVerb::class.java)
         mHasPastRevealed = savedInstanceState?.getBoolean("HasPastRevealed") == true
-        updateVerbTexts()
-        updateButtonText()
+        updateVerbTensesText()
+        updateMainActionButtonText()
     }
 
     private fun readIrregularVerbs(): ArrayList<IrregularVerb> = CSVFormat.DEFAULT
@@ -66,21 +64,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun onDoMainActionButtonClick() {
         if (isActionRoll()) {
-            val irregularVerbs = mIrregularVerbs
             val currentVerb = mCurrentVerb
-            (1..RANDOM_ATTEMPTS_NUMBER).forEach {
-                val irregularVerb = irregularVerbs.random()
-                if (irregularVerb.infinitive != currentVerb?.infinitive) {
-                    mCurrentVerb = irregularVerb
-                    return@forEach
+            val irregularVerbs = if (currentVerb == null)
+                mIrregularVerbs
+            else
+                mIrregularVerbs.apply {
+                    filterNotTo(ArrayList(size - 1)) { it.infinitive == currentVerb.infinitive }
                 }
-            }
+            mCurrentVerb = irregularVerbs.random()
             mHasPastRevealed = false
         } else {
             mHasPastRevealed = true
         }
-        updateVerbTexts()
-        updateButtonText()
+        updateVerbTensesText()
+        updateMainActionButtonText()
     }
 
     private fun onOpenVerbsListButtonClick() {
@@ -90,7 +87,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun isActionRoll() = mCurrentVerb == null || mHasPastRevealed
 
-    private fun updateButtonText() {
+    private fun updateMainActionButtonText() {
         mDoMainActionButton.text = getText(
             if (isActionRoll())
                 R.string.roll_verb
@@ -99,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun updateVerbTexts() {
+    private fun updateVerbTensesText() {
         val currentVerb = mCurrentVerb
         mInfinitiveText.text = currentVerb?.infinitive.orEmpty()
         if (mHasPastRevealed && currentVerb != null) {
