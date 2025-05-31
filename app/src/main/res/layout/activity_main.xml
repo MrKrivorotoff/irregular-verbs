@@ -58,5 +58,4 @@
         android:text="@string/open_verbs_list"
         android:textSize="24sp" />
 
-
 </LinearLayout>

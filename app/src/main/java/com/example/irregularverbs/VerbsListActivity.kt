@@ -21,15 +21,19 @@ class VerbsListActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        mVerbsTable = findViewById(R.id.verbs_table)
+        val verbsTable = findViewById<TableLayout>(R.id.verbs_table)
+        mVerbsTable = verbsTable
 
-        mIrregularVerbs = savedInstanceState?.getParcelableArrayList(
+        val irregularVerbs = savedInstanceState?.getParcelableArrayList(
             "IrregularVerbsList",
-            IrregularVerb::class.java
+            IrregularVerb::class.java,
         ) ?: intent.getParcelableArrayListExtra(
             "IrregularVerbsList",
-            IrregularVerb::class.java
+            IrregularVerb::class.java,
         ) ?: throw IllegalArgumentException()
+        mIrregularVerbs = irregularVerbs
+
+        // verbsTable.addView()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
         mIrregularVerbs = savedInstanceState?.getParcelableArrayList(
             "IrregularVerbsList",
-            IrregularVerb::class.java
+            IrregularVerb::class.java,
         ) ?: readIrregularVerbs()
 
         mCurrentVerb = savedInstanceState?.getParcelable("CurrentVerb", IrregularVerb::class.java)
