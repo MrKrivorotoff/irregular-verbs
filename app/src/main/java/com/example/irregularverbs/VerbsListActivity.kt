@@ -1,11 +1,15 @@
 package com.example.irregularverbs
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.TableLayout
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.get
 
 class VerbsListActivity : AppCompatActivity() {
     private lateinit var mVerbsTable: TableLayout
@@ -33,7 +37,14 @@ class VerbsListActivity : AppCompatActivity() {
         ) ?: throw IllegalArgumentException()
         mIrregularVerbs = irregularVerbs
 
-        // verbsTable.addView()
+        for (irregularVerb in irregularVerbs) {
+            val verbRow =
+                LayoutInflater.from(this).inflate(R.layout.verb_row_view, null) as ViewGroup
+            (verbRow[0] as TextView).text = irregularVerb.infinitive
+            (verbRow[1] as TextView).text = irregularVerb.pastSimple
+            (verbRow[2] as TextView).text = irregularVerb.pastParticiple
+            verbsTable.addView(verbRow)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

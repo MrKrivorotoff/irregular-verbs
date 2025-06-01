@@ -15,22 +15,22 @@
         <TableRow>
 
             <TextView
-                android:paddingLeft="8dp"
+                android:paddingLeft="16dp"
                 android:paddingTop="4dp"
                 android:text="@string/infinitive"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:paddingTop="4dp"
                 android:text="@string/past_simple"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:paddingTop="4dp"
                 android:text="@string/past_participle"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
         </TableRow>
     </TableLayout>
