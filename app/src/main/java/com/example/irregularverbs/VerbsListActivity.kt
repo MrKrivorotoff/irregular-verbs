@@ -1,9 +1,10 @@
 package com.example.irregularverbs
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.ViewGroup
 import android.widget.TableLayout
+import android.widget.TableRow
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -38,8 +39,9 @@ class VerbsListActivity : AppCompatActivity() {
         mIrregularVerbs = irregularVerbs
 
         for (irregularVerb in irregularVerbs) {
+            @SuppressLint("InflateParams")
             val verbRow =
-                LayoutInflater.from(this).inflate(R.layout.verb_row_view, null) as ViewGroup
+                LayoutInflater.from(this).inflate(R.layout.verb_row_view, null) as TableRow
             (verbRow[0] as TextView).text = irregularVerb.infinitive
             (verbRow[1] as TextView).text = irregularVerb.pastSimple
             (verbRow[2] as TextView).text = irregularVerb.pastParticiple
