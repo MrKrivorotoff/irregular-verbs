@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
             val irregularVerbs = if (currentVerb == null)
                 mIrregularVerbs
             else
-                mIrregularVerbs.apply {
+                mIrregularVerbs.run {
                     filterNotTo(ArrayList(size - 1)) { it.infinitive == currentVerb.infinitive }
                 }
             mCurrentVerb = irregularVerbs.random()
