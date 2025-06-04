@@ -1,5 +1,6 @@
 package com.example.irregularverbs
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mInfinitiveText: TextView
@@ -80,29 +82,6 @@ class MainActivity : AppCompatActivity() {
         updateTranslateAvailability()
     }
 
-    private fun onOpenVerbsListButtonClick() {
-        val intent = Intent(this, VerbsListActivity::class.java)
-        intent.putParcelableArrayListExtra("IrregularVerbsList", mIrregularVerbs)
-        startActivity(intent)
-    }
-
-    private fun getStringResIdByName(name: String): Int? = R.string::class.java.fields
-        .firstOrNull { it.name == name }
-        ?.let { it.getInt(it) }
-
-    private fun onTranslateButtonClick() {
-        val verb = mCurrentVerb?.infinitive
-        if (verb != null) {
-            val stringResId = getStringResIdByName("verb_$verb")
-            if (stringResId != null)
-                AlertDialog.Builder(this)
-                    .setTitle(resources.getText(R.string.translation))
-                    .setMessage(resources.getText(stringResId))
-                    .create()
-                    .show()
-        }
-    }
-
     private fun isActionRoll() = mCurrentVerb == null || mHasPastRevealed
 
     private fun updateMainActionButtonText() {
@@ -129,6 +108,38 @@ class MainActivity : AppCompatActivity() {
     private fun updateTranslateAvailability() {
         mTranslateButton.setEnabled(mCurrentVerb != null)
     }
+
+    private fun onOpenVerbsListButtonClick() {
+        val intent = Intent(this, VerbsListActivity::class.java)
+        intent.putParcelableArrayListExtra("IrregularVerbsList", mIrregularVerbs)
+        startActivity(intent)
+    }
+
+    private fun getStringResIdByName(name: String): Int? = R.string::class.java.fields
+        .firstOrNull { it.name == name }
+        ?.let { it.getInt(it) }
+
+    private fun onTranslateButtonClick() {
+        val verb = mCurrentVerb?.infinitive
+        if (verb != null) {
+            val stringResId = getStringResIdByName("verb_$verb")
+            if (stringResId != null) {
+                val currentLocale = getCurrentLocale()
+                val title = if (currentLocale == null)
+                    resources.getString(R.string.translation)
+                else
+                    "${resources.getString(R.string.translation)} ${currentLocale.language}"
+                AlertDialog.Builder(this)
+                    .setTitle(title)
+                    .setMessage(resources.getText(stringResId))
+                    .create()
+                    .show()
+            }
+        }
+    }
+
+    private fun Context.getCurrentLocale(): Locale? =
+        resources.configuration.getLocales().get(0)
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putParcelableArrayList("IrregularVerbsList", mIrregularVerbs)
