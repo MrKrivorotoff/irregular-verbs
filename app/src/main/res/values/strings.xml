@@ -6,4 +6,6 @@
     <string name="roll_verb">Roll verb</string>
     <string name="show_past">Show past</string>
     <string name="open_verbs_list">Open verbs list</string>
+    <string name="translate">Translate</string>
+    <string name="translation">Translation</string>
 </resources>

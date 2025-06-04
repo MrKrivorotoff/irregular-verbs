@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,8 +14,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mInfinitiveText: TextView
     private lateinit var mPastSimpleText: TextView
     private lateinit var mPastParticipleText: TextView
+
     private lateinit var mDoMainActionButton: Button
     private lateinit var mOpenVerbsListButton: Button
+    private lateinit var mTranslateButton: Button
 
     private lateinit var mIrregularVerbs: ArrayList<IrregularVerb>
 
@@ -42,6 +45,10 @@ class MainActivity : AppCompatActivity() {
         openVerbsListButton.setOnClickListener { onOpenVerbsListButtonClick() }
         mOpenVerbsListButton = openVerbsListButton
 
+        val translateButton = findViewById<Button>(R.id.button_translate)
+        translateButton.setOnClickListener { onTranslateButtonClick() }
+        mTranslateButton = translateButton
+
         mIrregularVerbs = savedInstanceState?.getParcelableArrayList(
             "IrregularVerbsList",
             IrregularVerb::class.java,
@@ -51,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         mHasPastRevealed = savedInstanceState?.getBoolean("HasPastRevealed") == true
         updateVerbTensesText()
         updateMainActionButtonText()
+        updateTranslateAvailability()
     }
 
     private fun onDoMainActionButtonClick() {
@@ -69,12 +77,30 @@ class MainActivity : AppCompatActivity() {
         }
         updateVerbTensesText()
         updateMainActionButtonText()
+        updateTranslateAvailability()
     }
 
     private fun onOpenVerbsListButtonClick() {
         val intent = Intent(this, VerbsListActivity::class.java)
         intent.putParcelableArrayListExtra("IrregularVerbsList", mIrregularVerbs)
         startActivity(intent)
+    }
+
+    private fun getStringResIdByName(name: String): Int? = R.string::class.java.fields
+        .firstOrNull { it.name == name }
+        ?.let { it.getInt(it) }
+
+    private fun onTranslateButtonClick() {
+        val verb = mCurrentVerb?.infinitive
+        if (verb != null) {
+            val stringResId = getStringResIdByName("verb_$verb")
+            if (stringResId != null)
+                AlertDialog.Builder(this)
+                    .setTitle(resources.getText(R.string.translation))
+                    .setMessage(resources.getText(stringResId))
+                    .create()
+                    .show()
+        }
     }
 
     private fun isActionRoll() = mCurrentVerb == null || mHasPastRevealed
@@ -98,6 +124,10 @@ class MainActivity : AppCompatActivity() {
             mPastSimpleText.text = ""
             mPastParticipleText.text = ""
         }
+    }
+
+    private fun updateTranslateAvailability() {
+        mTranslateButton.setEnabled(mCurrentVerb != null)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

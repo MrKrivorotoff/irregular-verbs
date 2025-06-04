@@ -30,22 +30,22 @@
         android:id="@+id/past_participle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:gravity="center"
         android:text="@string/past_participle"
         android:textSize="34sp" />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="8dp" />
+        android:layout_height="24dp" />
 
     <Button
         android:id="@+id/button_do_main_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginRight="32dp"
-        android:layout_marginBottom="16dp"
         android:text="@string/roll_verb"
         android:textSize="24sp" />
 
@@ -54,8 +54,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginRight="32dp"
         android:text="@string/open_verbs_list"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button_translate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="32dp"
+        android:enabled="false"
+        android:text="@string/translate"
         android:textSize="24sp" />
 
 </LinearLayout>
