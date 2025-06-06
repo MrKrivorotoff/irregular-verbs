@@ -12,6 +12,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import java.util.Locale
 
+private const val MAX_NUMBER_OF_PREVIOUS_VERBS = 5
+
+private const val IRREGULAR_VERBS_LIST_KEY = "IrregularVerbsList"
+private const val PREVIOUS_VERBS_ARRAY_KEY = "PreviousVerbsArray"
+private const val CURRENT_VERB_KEY = "CurrentVerb"
+private const val HAS_PAST_REVEALED_KEY = "HasPastRevealed"
+
 class MainActivity : AppCompatActivity() {
     private lateinit var mInfinitiveText: TextView
     private lateinit var mPastSimpleText: TextView
@@ -22,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mTranslateButton: Button
 
     private lateinit var mIrregularVerbs: ArrayList<IrregularVerb>
+    private lateinit var mPreviousVerbs: ArrayDeque<IrregularVerb>
 
     private var mCurrentVerb: IrregularVerb? = null
     private var mHasPastRevealed: Boolean = false
@@ -52,12 +60,17 @@ class MainActivity : AppCompatActivity() {
         mTranslateButton = translateButton
 
         mIrregularVerbs = savedInstanceState?.getParcelableArrayList(
-            "IrregularVerbsList",
+            IRREGULAR_VERBS_LIST_KEY,
             IrregularVerb::class.java,
         ) ?: readIrregularVerbs()
+        mPreviousVerbs = savedInstanceState?.getParcelableArray(
+            PREVIOUS_VERBS_ARRAY_KEY,
+            IrregularVerb::class.java,
+        )?.let { ArrayDeque(it.asList()) } ?: ArrayDeque(MAX_NUMBER_OF_PREVIOUS_VERBS)
 
-        mCurrentVerb = savedInstanceState?.getParcelable("CurrentVerb", IrregularVerb::class.java)
-        mHasPastRevealed = savedInstanceState?.getBoolean("HasPastRevealed") == true
+        mCurrentVerb =
+            savedInstanceState?.getParcelable(CURRENT_VERB_KEY, IrregularVerb::class.java)
+        mHasPastRevealed = savedInstanceState?.getBoolean(HAS_PAST_REVEALED_KEY) == true
         updateVerbTensesText()
         updateMainActionButtonText()
         updateTranslateAvailability()
@@ -65,14 +78,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun onDoMainActionButtonClick() {
         if (isActionRoll()) {
-            val currentVerb = mCurrentVerb
-            val irregularVerbs = if (currentVerb == null)
-                mIrregularVerbs
-            else
-                mIrregularVerbs.run {
-                    filterNotTo(ArrayList(size - 1)) { it.infinitive == currentVerb.infinitive }
-                }
-            mCurrentVerb = irregularVerbs.random()
+            rollNextVerbAndReturnPrevious()
+                ?.storeAsPrevious()
             mHasPastRevealed = false
         } else {
             mHasPastRevealed = true
@@ -84,13 +91,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun isActionRoll() = mCurrentVerb == null || mHasPastRevealed
 
-    private fun updateMainActionButtonText() {
-        mDoMainActionButton.text = getText(
-            if (isActionRoll())
-                R.string.roll_verb
-            else
-                R.string.show_past
-        )
+    private fun rollNextVerbAndReturnPrevious(): IrregularVerb? {
+        val currentVerb = mCurrentVerb
+        val irregularVerbs = if (currentVerb == null)
+            mIrregularVerbs
+        else
+            mIrregularVerbs.run {
+                filterNotTo(ArrayList(size - 1)) { it.infinitive == currentVerb.infinitive }
+            }
+        mCurrentVerb = irregularVerbs.random()
+        return currentVerb
+    }
+
+    private fun IrregularVerb.storeAsPrevious() {
+        val previousVerbs = mPreviousVerbs
+        if (previousVerbs.size == MAX_NUMBER_OF_PREVIOUS_VERBS)
+            previousVerbs.removeFirst()
+        previousVerbs.addLast(this)
     }
 
     private fun updateVerbTensesText() {
@@ -103,6 +120,15 @@ class MainActivity : AppCompatActivity() {
             mPastSimpleText.text = ""
             mPastParticipleText.text = ""
         }
+    }
+
+    private fun updateMainActionButtonText() {
+        mDoMainActionButton.text = getText(
+            if (isActionRoll())
+                R.string.roll_verb
+            else
+                R.string.show_past
+        )
     }
 
     private fun updateTranslateAvailability() {
@@ -142,9 +168,12 @@ class MainActivity : AppCompatActivity() {
         resources.configuration.getLocales().get(0)
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putParcelableArrayList("IrregularVerbsList", mIrregularVerbs)
-        outState.putParcelable("CurrentVerb", mCurrentVerb)
-        outState.putBoolean("HasPastRevealed", mHasPastRevealed)
+        with(outState) {
+            putParcelableArrayList(IRREGULAR_VERBS_LIST_KEY, mIrregularVerbs)
+            putParcelableArray(PREVIOUS_VERBS_ARRAY_KEY, mPreviousVerbs.toTypedArray())
+            putParcelable(CURRENT_VERB_KEY, mCurrentVerb)
+            putBoolean(HAS_PAST_REVEALED_KEY, mHasPastRevealed)
+        }
         super.onSaveInstanceState(outState)
     }
 }
