@@ -3,9 +3,12 @@
     <string name="infinitive">Infinitive</string>
     <string name="past_simple">Past simple</string>
     <string name="past_participle">Past participle</string>
-    <string name="roll_verb">Select next verb</string>
+    <string name="select_verb">Select next verb</string>
     <string name="show_past">Show past tenses</string>
     <string name="open_verbs_list">Open verbs list</string>
     <string name="translate">Translate</string>
     <string name="translation">Translation</string>
+    <string name="translation_template">Translation %1$s</string>
+    <string name="previous_verb">Previous</string>
+    <string name="previous_verb_template">Previous: %1$s</string>
 </resources>

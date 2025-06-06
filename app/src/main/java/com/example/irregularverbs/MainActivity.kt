@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mDoMainActionButton: Button
     private lateinit var mOpenVerbsListButton: Button
     private lateinit var mTranslateButton: Button
+    private lateinit var mPreviousVerbButton: Button
 
     private lateinit var mIrregularVerbs: ArrayList<IrregularVerb>
     private lateinit var mPreviousVerbs: ArrayDeque<IrregularVerb>
@@ -59,6 +60,10 @@ class MainActivity : AppCompatActivity() {
         translateButton.setOnClickListener { onTranslateButtonClick() }
         mTranslateButton = translateButton
 
+        val previousVerbButton = findViewById<Button>(R.id.button_previous_verb)
+        previousVerbButton.setOnClickListener { onPreviousVerbButtonClick() }
+        mPreviousVerbButton = previousVerbButton
+
         mIrregularVerbs = savedInstanceState?.getParcelableArrayList(
             IRREGULAR_VERBS_LIST_KEY,
             IrregularVerb::class.java,
@@ -74,11 +79,12 @@ class MainActivity : AppCompatActivity() {
         updateVerbTensesText()
         updateMainActionButtonText()
         updateTranslateAvailability()
+        updatePreviousVerbButton()
     }
 
     private fun onDoMainActionButtonClick() {
-        if (isActionRoll()) {
-            rollNextVerbAndReturnPrevious()
+        if (isActionSelectNext()) {
+            selectNextVerbAndReturnPrevious()
                 ?.storeAsPrevious()
             mHasPastRevealed = false
         } else {
@@ -87,11 +93,12 @@ class MainActivity : AppCompatActivity() {
         updateVerbTensesText()
         updateMainActionButtonText()
         updateTranslateAvailability()
+        updatePreviousVerbButton()
     }
 
-    private fun isActionRoll() = mCurrentVerb == null || mHasPastRevealed
+    private fun isActionSelectNext() = mCurrentVerb == null || mHasPastRevealed
 
-    private fun rollNextVerbAndReturnPrevious(): IrregularVerb? {
+    private fun selectNextVerbAndReturnPrevious(): IrregularVerb? {
         val currentVerb = mCurrentVerb
         val irregularVerbs = if (currentVerb == null)
             mIrregularVerbs
@@ -124,8 +131,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateMainActionButtonText() {
         mDoMainActionButton.text = getText(
-            if (isActionRoll())
-                R.string.roll_verb
+            if (isActionSelectNext())
+                R.string.select_verb
             else
                 R.string.show_past
         )
@@ -133,6 +140,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateTranslateAvailability() {
         mTranslateButton.setEnabled(mCurrentVerb != null)
+    }
+
+    private fun updatePreviousVerbButton() {
+        val previousVerbButton = mPreviousVerbButton
+        val previousVerb = mPreviousVerbs.lastOrNull()
+        if (previousVerb == null) {
+            previousVerbButton.setEnabled(false)
+            previousVerbButton.text = getString(R.string.previous_verb)
+        } else {
+            previousVerbButton.setEnabled(true)
+            previousVerbButton.text =
+                getString(R.string.previous_verb_template, previousVerb.infinitive)
+        }
     }
 
     private fun onOpenVerbsListButtonClick() {
@@ -152,12 +172,12 @@ class MainActivity : AppCompatActivity() {
             if (stringResId != null) {
                 val currentLocale = getCurrentLocale()
                 val title = if (currentLocale == null)
-                    resources.getString(R.string.translation)
+                    getString(R.string.translation)
                 else
-                    "${resources.getString(R.string.translation)} ${currentLocale.language}"
+                    getString(R.string.translation_template, currentLocale.language)
                 AlertDialog.Builder(this)
                     .setTitle(title)
-                    .setMessage(resources.getText(stringResId))
+                    .setMessage(getText(stringResId))
                     .create()
                     .show()
             }
@@ -166,6 +186,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun Context.getCurrentLocale(): Locale? =
         resources.configuration.getLocales().get(0)
+
+    private fun onPreviousVerbButtonClick() {
+        mCurrentVerb = mPreviousVerbs.removeLast()
+        mHasPastRevealed = false
+        updateVerbTensesText()
+        updateMainActionButtonText()
+        updatePreviousVerbButton()
+    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         with(outState) {
