@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Неправильные глаголы</string>
+    <string name="app_name">Неправильные Глаголы</string>
     <string name="infinitive">Инфинитив</string>
     <string name="past_simple">Прошедшее простое время</string>
     <string name="past_participle">Причастие прошедшего времени</string>
