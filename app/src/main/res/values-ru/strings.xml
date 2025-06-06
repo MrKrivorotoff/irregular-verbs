@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Неправильные глаголы</string>
+    <string name="infinitive">Инфинитив</string>
+    <string name="past_simple">Прошедшее простое время</string>
+    <string name="past_participle">Причастие прошедшего времени</string>
+    <string name="roll_verb">Выбрать следующий глагол</string>
+    <string name="show_past">Показать прошедшие времена</string>
+    <string name="open_verbs_list">Открыть список глаголов</string>
+    <string name="translate">Перевести</string>
+    <string name="translation">Перевод</string>
+</resources>
