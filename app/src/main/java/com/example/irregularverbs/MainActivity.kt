@@ -12,7 +12,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import java.util.Locale
 
-private const val MAX_NUMBER_OF_PREVIOUS_VERBS = 5
+private const val MAX_NUMBER_OF_PREVIOUS_VERBS = 10
 
 private const val IRREGULAR_VERBS_LIST_KEY = "IrregularVerbsList"
 private const val PREVIOUS_VERBS_ARRAY_KEY = "PreviousVerbsArray"

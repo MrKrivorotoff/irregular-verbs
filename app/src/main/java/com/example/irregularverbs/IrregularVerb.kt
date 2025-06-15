@@ -11,9 +11,9 @@ data class IrregularVerb(
     val pastParticiple: String,
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString().orEmpty(),
-        parcel.readString().orEmpty(),
-        parcel.readString().orEmpty(),
+        infinitive = parcel.readString().orEmpty(),
+        pastSimple = parcel.readString().orEmpty(),
+        pastParticiple = parcel.readString().orEmpty(),
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
