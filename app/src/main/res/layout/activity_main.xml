@@ -50,16 +50,6 @@
         android:textSize="24sp" />
 
     <Button
-        android:id="@+id/button_open_verbs_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="32dp"
-        android:text="@string/open_verbs_list"
-        android:textSize="24sp" />
-
-    <Button
         android:id="@+id/button_translate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -79,6 +69,16 @@
         android:layout_marginRight="32dp"
         android:enabled="false"
         android:text="@string/previous_verb"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button_open_verbs_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="32dp"
+        android:text="@string/open_verbs_list"
         android:textSize="24sp" />
 
 </LinearLayout>
