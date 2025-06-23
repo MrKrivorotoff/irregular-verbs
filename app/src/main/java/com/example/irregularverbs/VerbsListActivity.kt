@@ -38,15 +38,35 @@ class VerbsListActivity : AppCompatActivity() {
         ) ?: throw IllegalArgumentException()
         mIrregularVerbs = irregularVerbs
 
+        var currentFirstChar = Char.MIN_VALUE
         for (irregularVerb in irregularVerbs) {
-            @SuppressLint("InflateParams")
-            val verbRow =
-                LayoutInflater.from(this).inflate(R.layout.verb_row_view, null) as TableRow
-            (verbRow[0] as TextView).text = irregularVerb.infinitive
-            (verbRow[1] as TextView).text = irregularVerb.pastSimple
-            (verbRow[2] as TextView).text = irregularVerb.pastParticiple
-            verbsTable.addView(verbRow)
+            val firstChar: Char = irregularVerb.infinitive[0]
+            if (firstChar != currentFirstChar) {
+                currentFirstChar = firstChar
+                verbsTable.addCharRow(firstChar)
+            }
+            verbsTable.addVerbRow(irregularVerb)
         }
+    }
+
+    private fun TableLayout.addCharRow(char: Char) {
+        @SuppressLint("InflateParams")
+        val row = LayoutInflater.from(this@VerbsListActivity)
+            .inflate(R.layout.char_row_view, null) as TableRow
+        (row[0] as TextView).text = char.toString()
+        (row[1] as TextView).text = ""
+        (row[2] as TextView).text = ""
+        addView(row)
+    }
+
+    private fun TableLayout.addVerbRow(irregularVerb: IrregularVerb) {
+        @SuppressLint("InflateParams")
+        val row = LayoutInflater.from(this@VerbsListActivity)
+            .inflate(R.layout.verb_row_view, null) as TableRow
+        (row[0] as TextView).text = irregularVerb.infinitive
+        (row[1] as TextView).text = irregularVerb.pastSimple
+        (row[2] as TextView).text = irregularVerb.pastParticiple
+        addView(row)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

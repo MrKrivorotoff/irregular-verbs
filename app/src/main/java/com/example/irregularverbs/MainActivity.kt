@@ -100,12 +100,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun selectNextVerbAndReturnPrevious(): IrregularVerb? {
         val currentVerb = mCurrentVerb
-        val irregularVerbs = if (currentVerb == null)
+        val irregularVerbs = if (currentVerb == null) {
             mIrregularVerbs
-        else
+        } else {
+            val currentVerbInfinitive = currentVerb.infinitive
             mIrregularVerbs.run {
-                filterNotTo(ArrayList(size - 1)) { it.infinitive == currentVerb.infinitive }
+                filterNotTo(ArrayList(size - 1)) { it.infinitive == currentVerbInfinitive }
             }
+        }
         mCurrentVerb = irregularVerbs.random()
         return currentVerb
     }
