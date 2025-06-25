@@ -103,9 +103,9 @@ class MainActivity : AppCompatActivity() {
         val irregularVerbs = if (currentVerb == null) {
             mIrregularVerbs
         } else {
-            val currentVerbInfinitive = currentVerb.infinitive
+            val currentVerbIndex = currentVerb.index
             mIrregularVerbs.run {
-                filterNotTo(ArrayList(size - 1)) { it.infinitive == currentVerbInfinitive }
+                filterNotTo(ArrayList(size - 1)) { it.index == currentVerbIndex }
             }
         }
         mCurrentVerb = irregularVerbs.random()
