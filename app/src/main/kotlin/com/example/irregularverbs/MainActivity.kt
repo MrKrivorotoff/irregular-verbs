@@ -100,14 +100,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun selectNextVerbAndReturnPrevious(): IrregularVerb? {
         val currentVerb = mCurrentVerb
-        val irregularVerbs = if (currentVerb == null) {
+        val irregularVerbs = if (currentVerb == null)
             mIrregularVerbs
-        } else {
-            val currentVerbIndex = currentVerb.index
-            mIrregularVerbs.run {
-                filterNotTo(ArrayList(size - 1)) { it.index == currentVerbIndex }
-            }
-        }
+        else
+            mIrregularVerbs.copyAllExceptIndex(currentVerb.index)
         mCurrentVerb = irregularVerbs.random()
         return currentVerb
     }

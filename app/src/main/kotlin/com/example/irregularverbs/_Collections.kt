@@ -7,3 +7,7 @@ inline fun <T> Collection<T>.mapToIntArray(transform: (T) -> Int): IntArray {
         result[index++] = transform(element)
     return result
 }
+
+inline fun <reified T> List<T>.copyAllExceptIndex(index: Int): List<T> =
+    Array(size - 1) { i -> if (i < index) get(i) else get(i + 1) }
+        .asList()
