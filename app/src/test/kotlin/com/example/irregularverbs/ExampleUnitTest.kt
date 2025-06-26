@@ -17,7 +17,7 @@ class ExampleUnitTest {
     @Test
     fun copyAllExceptIndex_isCorrect() {
         val source = listOf("str0", "str1", "str2", "str3", "str4")
-        val target = source.copyAllExceptIndex(2)
+        val target = source.copyAllExceptIndexToArray(2).asList()
         assertEquals(listOf("str0", "str1", "str3", "str4"), target)
     }
 }
