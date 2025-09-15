@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-    implementation("org.apache.commons:commons-csv:1.14.0")
+    implementation("org.apache.commons:commons-csv:1.14.1")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
