@@ -1,4 +1,4 @@
-package com.example.irregularverbs
+package com.mrkrivorotoff.irregularverbs
 
 import android.content.Context
 import android.content.Intent

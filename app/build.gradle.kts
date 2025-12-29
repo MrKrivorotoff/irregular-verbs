@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.irregularverbs"
+    namespace = "com.mrkrivorotoff.irregularverbs"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.irregularverbs"
+        applicationId = "com.mrkrivorotoff.irregularverbs"
         minSdk = 33
         targetSdk = 35
         versionCode = 1

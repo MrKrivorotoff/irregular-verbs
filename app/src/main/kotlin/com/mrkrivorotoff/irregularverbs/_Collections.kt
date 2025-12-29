@@ -1,4 +1,4 @@
-package com.example.irregularverbs
+package com.mrkrivorotoff.irregularverbs
 
 inline fun <T> Collection<T>.mapToIntArray(transform: (T) -> Int): IntArray {
     val result = IntArray(size)

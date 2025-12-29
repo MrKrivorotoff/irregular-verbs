@@ -1,4 +1,4 @@
-package com.example.irregularverbs
+package com.mrkrivorotoff.irregularverbs
 
 import android.annotation.SuppressLint
 import android.os.Bundle
