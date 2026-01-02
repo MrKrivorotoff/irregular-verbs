@@ -14,7 +14,6 @@ import androidx.core.view.get
 
 class VerbsListActivity : AppCompatActivity() {
     private lateinit var mVerbsTable: TableLayout
-
     private lateinit var mIrregularVerbs: ArrayList<IrregularVerb>
 
     override fun onCreate(savedInstanceState: Bundle?) {
