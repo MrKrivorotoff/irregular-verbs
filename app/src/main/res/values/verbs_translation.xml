@@ -1,5 +1,7 @@
 <resources>
+    <string name="verb_arise">arise</string>
     <string name="verb_be">be</string>
+    <string name="verb_bear">bear</string>
     <string name="verb_beat">beat</string>
     <string name="verb_become">become</string>
     <string name="verb_begin">begin</string>
@@ -98,6 +100,7 @@
     <string name="verb_stick">stick</string>
     <string name="verb_sting">sting</string>
     <string name="verb_stink">stink</string>
+    <string name="verb_stride">stride</string>
     <string name="verb_strike">strike</string>
     <string name="verb_swear">swear</string>
     <string name="verb_sweep">sweep</string>

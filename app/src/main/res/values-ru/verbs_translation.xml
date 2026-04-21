@@ -1,5 +1,7 @@
 <resources>
+    <string name="verb_arise">возникать</string>
     <string name="verb_be">быть</string>
+    <string name="verb_bear">нести</string>
     <string name="verb_beat">бить</string>
     <string name="verb_become">стать</string>
     <string name="verb_begin">начать</string>
@@ -98,6 +100,7 @@
     <string name="verb_stick">придерживаться</string>
     <string name="verb_sting">жалить</string>
     <string name="verb_stink">вонять</string>
+    <string name="verb_stride">шагать</string>
     <string name="verb_strike">ударить</string>
     <string name="verb_swear">ругаться</string>
     <string name="verb_sweep">подметать</string>
