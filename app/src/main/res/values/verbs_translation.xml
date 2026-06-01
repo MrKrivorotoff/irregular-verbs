@@ -64,6 +64,7 @@
     <string name="verb_make">make</string>
     <string name="verb_mean">mean</string>
     <string name="verb_meet">meet</string>
+    <string name="verb_override">override</string>
     <string name="verb_pay">pay</string>
     <string name="verb_put">put</string>
     <string name="verb_read">read</string>
