@@ -118,5 +118,6 @@
     <string name="verb_wear">wear</string>
     <string name="verb_weep">weep</string>
     <string name="verb_win">win</string>
+    <string name="verb_wind">wind</string>
     <string name="verb_write">write</string>
 </resources>
